@@ -1,0 +1,17 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Local working copies of the source-of-truth files
+# (the repo ships .example versions; your real ones are personal)
+/DESIGN.md
+/design-tokens.json
+
+# Logs / temp
+*.log
+.tmp/
