@@ -43,7 +43,7 @@ That's not a model problem. It's a **context** problem.
 | "Looks fine" handoff | Audits for a11y, mobile, copy, Tailwind alignment |
 | Vague prompts → vague UI | `brief-framing` turns intent into a buildable brief |
 
-**13 skills. Zero npm deps. One message to bootstrap.**
+**13 skills. Zero npm deps. Four steps to bind.**
 
 You still design in Claude Design Web. The harness just stops your system from getting amnesia.
 
@@ -53,50 +53,70 @@ You still design in Claude Design Web. The harness just stops your system from g
 - **Design system authors** maintaining tokens + components in this repo → **Builder** mode
 - **Product teams** consuming a published bundle → **Consumer** mode (`_ds/<bundle>/`)
 
-Not sure which mode? Open the project and say:
+**Consumer:** app or landing that already has `_ds/<bundle>/`.  
+**Builder:** DS project with `_ds_manifest.json` + `_ds_bundle.js` at the root.
 
-```
-Set up this harness for my design system.
-```
-
-`harness-auto-setup` detects your layout and runs bootstrap. No wiring.
+Mode is auto-detected on `GO`. No terminal required.
 
 ## Quick start
 
-Six steps. First three take one conversation.
+### 1. Download
 
-**1.** Open this folder in [Claude Design Web](https://claude.ai/design).
+[Download the ZIP](https://github.com/oalanicolas/claude-design-premium/archive/refs/heads/main.zip) (Code → Download ZIP).
 
-**2.** Bootstrap:
+### 2. Upload to your Claude Design project
 
+Open [Claude Design Web](https://claude.ai/design), open your project, and upload the ZIP.
+
+### 3. Move harness files to the project root
+
+In the same chat, ask Claude:
+
+```text
+Copy all files from the claude-design-premium folder to the project root.
+Keep the existing design system files (_ds/ or root manifest + tokens).
 ```
-Set up this harness for my design system.
+
+The ZIP unpacks as `claude-design-premium-main/` (or similar). Everything in that folder goes to the root: `CLAUDE.md`, `skills/`, `scripts/`, etc.
+
+### 4. New tab → GO
+
+Open a **new tab** in the same project and send:
+
+```text
+GO
 ```
 
-Writes `BOUND_DS.json`, scaffolds `design-system.dc.html`, generates `.cdp/showcase-brief.json`.
+`harness-auto-setup` runs: detects builder or consumer, writes `BOUND_DS.json`, scaffolds `design-system.dc.html`, generates `.cdp/showcase-brief.json`, and asks what to design first.
 
-**3.** Fill `DESIGN.md` with product name, voice, surfaces, and brand rules. Replace `CDP:UNCONFIGURED` placeholders.
+No npm, git, or terminal. `scripts/*.mjs` run **inside the canvas** when Claude reads and applies them (paired with skills per `CLAUDE.md`).
 
-**4.** Assemble the showcase (bootstrap only scaffolds; your model builds the real specimen):
+### After GO (optional)
 
-```
+**Configure `DESIGN.md`** if placeholders remain (`CDP:UNCONFIGURED`).
+
+**Assemble the full specimen** (bootstrap only scaffolds the page):
+
+```text
 Assemble the full design-system showcase from the brief.
 ```
 
-**5.** Build:
+**Build a screen:**
 
-```
+```text
 Create a dashboard for [your product] using our design system.
 ```
 
-**6.** Ship the conversation. Skills route through `CLAUDE.md`: guardian on UI work, audits before handoff, `framework-handoff` when you're ready for code.
+Skills route through `CLAUDE.md`: guardian on UI work, audits before handoff, `framework-handoff` when you are ready for code.
 
 ## How it works
 
 ```
-Open project in Claude Design Web
+Download ZIP → upload to Claude Design project
         ↓
-harness-auto-setup → bootstrap-harness.mjs
+Promote harness files to project root
+        ↓
+New tab → GO → harness-auto-setup + bootstrap-harness.mjs
         ↓
 BOUND_DS.json + showcase-brief + scaffolded pages
         ↓
