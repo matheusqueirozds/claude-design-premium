@@ -24,7 +24,7 @@
   <aside style="width:256px;flex-shrink:0;background:var(--card);border-right:1px solid var(--hairline);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;">
     <div style="padding:24px 22px;border-bottom:1px solid var(--hairline);">
       <span style="display:inline-flex;align-items:center;gap:11px;">
-        <img src="{{BOUND_DS_LOGO_PATH}}" alt="{{BOUND_DS_NAME}}" width="26" height="26" style="flex-shrink:0;display:block;">
+        <img src="_ds/academia-ds-460d36aa-7bb2-48dc-9ede-f9e8954fcdb3/assets/logo-academialendaria.svg" alt="{{BOUND_DS_NAME}}" width="26" height="26" style="flex-shrink:0;display:block;">
         <span style="font-family:var(--font-display);font-weight:400;font-size:var(--font-size-xl);letter-spacing:-0.01em;">{{BOUND_DS_NAME}}</span>
       </span>
     </div>
@@ -55,17 +55,17 @@
     <header style="height:64px;flex-shrink:0;border-bottom:1px solid var(--hairline);display:flex;align-items:center;gap:20px;padding:0 clamp(20px,4vw,40px);background:var(--background);position:sticky;top:0;z-index:10;">
       <div style="display:flex;align-items:center;gap:14px;min-width:0;">
         <span style="display:inline-flex;align-items:center;gap:9px;">
-          <img src="{{BOUND_DS_LOGO_PATH}}" alt="{{BOUND_DS_NAME}}" width="20" height="20" style="flex-shrink:0;display:block;">
+          <img src="_ds/academia-ds-460d36aa-7bb2-48dc-9ede-f9e8954fcdb3/assets/logo-academialendaria.svg" alt="{{BOUND_DS_NAME}}" width="20" height="20" style="flex-shrink:0;display:block;">
           <span style="font-family:var(--font-display);font-size:var(--font-size-lg);white-space:nowrap;">{{BOUND_DS_NAME}}</span>
         </span>
         <span style="width:1px;height:20px;background:var(--hairline-strong);"></span>
-        <span class="al-data" style="color:var(--muted-foreground);">{{BOUND_DS_AREA_SUFFIX}}</span>
+        <span class="al-data" style="color:var(--muted-foreground);">BIBLIOTECA</span>
       </div>
 
       <div style="flex:1;display:flex;justify-content:center;">
         <button type="button" style="display:flex;align-items:center;gap:10px;width:min(420px,100%);height:38px;padding:0 14px;border:1px solid var(--hairline);border-radius:var(--radius-sm);background:transparent;color:var(--muted-foreground);font-family:var(--font-sans);font-size:var(--font-size-sm);cursor:pointer;" style-hover="border-color:var(--hairline-strong);">
           <i class="iconoir-search" aria-hidden="true" style="font-size:16px;"></i>
-          <span style="flex:1;text-align:left;">{{BOUND_DS_SEARCH_PLACEHOLDER}}</span>
+          <span style="flex:1;text-align:left;">Buscar em Academia DS…</span>
           <span class="al-data" style="border:1px solid var(--hairline);border-radius:var(--radius-xs);padding:2px 6px;">⌘K</span>
         </button>
       </div>
@@ -83,21 +83,19 @@
         <!-- HERO COMPACTO: uma banda, conteúdo acima da dobra -->
         <section style="display:flex;align-items:flex-end;justify-content:space-between;gap:32px;flex-wrap:wrap;">
           <div style="display:flex;flex-direction:column;gap:14px;max-width:46ch;">
-            <p class="al-eyebrow" style="color:var(--primary);">{{BOUND_DS_WELCOME_EYEBROW}}</p>
-            <h1 style="font-family:var(--font-display);font-weight:300;font-size:var(--font-size-5xl);line-height:1.02;letter-spacing:-0.01em;margin:0;">{{BOUND_DS_WELCOME_HEADLINE}}</h1>
-            <p style="font-family:var(--font-serif);font-style:italic;color:var(--muted-foreground);font-size:var(--font-size-lg);margin:0;line-height:1.45;">{{BOUND_DS_WELCOME_SUBHEAD}}</p>
+            <p class="al-eyebrow" style="color:var(--primary);">Biblioteca</p>
+            <h1 style="font-family:var(--font-display);font-weight:300;font-size:var(--font-size-5xl);line-height:1.02;letter-spacing:-0.01em;margin:0;">Bem-vindo ao <em>Academia DS.</em></h1>
+            <p style="font-family:var(--font-serif);font-style:italic;color:var(--muted-foreground);font-size:var(--font-size-lg);margin:0;line-height:1.45;">Substitua este conteúdo demo pela sua entrega.</p>
           </div>
-          <!-- CDP:REQUIRES:StatChip -->
-          <div style="display:flex;gap:24px;align-items:center;flex-wrap:wrap;">
+                    <div style="display:flex;gap:24px;align-items:center;flex-wrap:wrap;">
             <x-import component-from-global-scope="{{BOUND_DS_NAMESPACE}}.StatChip" label="Status" value="ATIVO" tone="primary" hint-size="auto,52px"></x-import>
             <x-import component-from-global-scope="{{BOUND_DS_NAMESPACE}}.StatChip" label="Progresso" value="64%" tone="success" hint-size="auto,52px"></x-import>
-            <x-import component-from-global-scope="{{BOUND_DS_NAMESPACE}}.Button" hint-size="auto,40px">{{BOUND_DS_CTA_PRIMARY}}</x-import>
+            <x-import component-from-global-scope="{{BOUND_DS_NAMESPACE}}.Button" hint-size="auto,40px">Expanda sua Consciência.</x-import>
           </div>
-          <!-- /CDP:REQUIRES:StatChip -->
+          
         </section>
 
-        <!-- CDP:REQUIRES:Progress -->
-        <x-import component-from-global-scope="{{BOUND_DS_NAMESPACE}}.Card" hint-size="100%,160px">
+                <x-import component-from-global-scope="{{BOUND_DS_NAMESPACE}}.Card" hint-size="100%,160px">
           <x-import component-from-global-scope="{{BOUND_DS_NAMESPACE}}.CardContent" hint-size="100%,160px">
             <div style="display:flex;gap:24px;align-items:center;flex-wrap:wrap;padding-top:24px;">
               <div style="width:64px;height:88px;border-radius:var(--radius-base);background:linear-gradient(150deg,#1a1a1a,#0e0e0e);border:1px solid var(--hairline);display:grid;place-items:center;flex-shrink:0;">
@@ -113,17 +111,16 @@
             </div>
           </x-import>
         </x-import>
-        <!-- /CDP:REQUIRES:Progress -->
+        
 
-        <!-- CDP:REQUIRES:BookCard -->
-        <section style="display:flex;flex-direction:column;gap:28px;">
+                <section style="display:flex;flex-direction:column;gap:28px;">
           <x-import component-from-global-scope="{{BOUND_DS_NAMESPACE}}.SectionHeader" eyebrow="Demo" title="Galeria de conteúdo" hint-size="100%,72px"></x-import>
           <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(180px,100%),1fr));gap:28px;">
             <x-import component-from-global-scope="{{BOUND_DS_NAMESPACE}}.BookCard" title="Exemplo A" author="Autor" category="Categoria" status="reading" hint-size="100%,320px"></x-import>
             <x-import component-from-global-scope="{{BOUND_DS_NAMESPACE}}.BookCard" title="Exemplo B" author="Autor" category="Categoria" status="read" hint-size="100%,320px"></x-import>
           </div>
         </section>
-        <!-- /CDP:REQUIRES:BookCard -->
+        
 
       </div>
     </main>
@@ -137,8 +134,11 @@ class Component extends DCLogic {
   renderVals() {
     const items = [
       // CDP:APP-NAV
-      { id: 'inicio', label: 'Início', icon: 'book' },
-      { id: 'produto', label: 'Produto', icon: 'settings' },
+      { id: 'biblioteca', label: 'Biblioteca', icon: 'book' },
+      { id: 'academia-rea-do-aluno-lms-', label: 'Academia / Área do Aluno (LMS)', icon: 'graduation-cap' },
+      { id: 'comunidade', label: 'Comunidade', icon: 'brain' },
+      { id: 'mentes-sint-ticas', label: 'Mentes Sintéticas', icon: 'group' },
+      { id: 'jetbrains-mono', label: 'JetBrains Mono', icon: 'bookmark' },
       // /CDP:APP-NAV
     ];
 

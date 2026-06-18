@@ -42,9 +42,12 @@ is valid, skip to the user's message (report scripts applied).
 
 1. List every file and folder at the project root.
 2. Note existing `*.dc.html`, `skills/`, `scripts/`, `styles.css`, `DESIGN.md`, `BOUND_DS.json`.
-3. Locate `./_ds/` — expect exactly one bundle subfolder containing `_ds_manifest.json` and
+3. Locate `./_ds/` — expect at least one bundle subfolder with `_ds_manifest.json` and
    `_ds_bundle.js`. If zero: stop setup, tell user the host folder must include `_ds/<bundle>/`.
-   If multiple: ask which bundle to bind before continuing.
+   If multiple: use `BOUND_DS.json` → `root` / `selectedBundle` when it matches a candidate;
+   otherwise default to the **first bundle alphabetically**, persist `selectedBundle` in
+   `BOUND_DS.json`, and note alternates in the setup report. Ask the user which bundle only when
+   they explicitly need to switch (do not block setup on silence).
 
 ### Phase 2 — Design system discovery
 
@@ -76,7 +79,8 @@ Build a mental binding object:
 `voice` object (tagline, heroHeadline, heroSubhead, badge, ctaPrimary, ctaSecondary, themeLabel,
 surfaces, areaSuffix, searchPlaceholder, logoPath, footerNote, docTitle, docLead, deckCoverHeadline,
 deckCoverSubhead, welcomeEyebrow, welcomeHeadline, welcomeSubhead, closingEyebrow, closingHeadline).
-Derive `voice` from DS readme + manifest — mirror `scripts/extract-ds-voice.mjs` logic.
+Derive `voice` from DS readme + token CSS + manifest — mirror `scripts/extract-ds-voice.mjs` and
+`scripts/extract-ds-tokens.mjs` logic.
 
 **Write `styles.css`** — header comment + one `@import` per `globalCssPaths` entry:
 
@@ -135,27 +139,15 @@ Never leave Academia/Lendária demo copy when the bound DS is a different produc
 
 ### Phase 5 — Synthesize `DESIGN.md`
 
-Replace the template `DESIGN.md` entirely. Source priority:
+**Mandatory.** Mirror `scripts/synthesize-design-md.mjs` exactly (read the script, apply its output
+shape). Do not leave the template stub in place.
 
-1. DS `readme.md` (brand, voice, philosophy, do/don't)
-2. `_ds_manifest.json` (components, cards, templates)
-3. Token CSS samples (color roles, type scale, radii, motion)
-4. Existing project DCs if they contain approved direction
+Source priority: readme → manifest → token CSS (`extract-ds-tokens`) → voice defaults.
 
-Required sections (all filled — no stub phrases):
+Required: all 7 sections filled, header names the real DS, no `CDP:UNCONFIGURED`, no
+`Describe the product's visual register` filler.
 
-1. **Design Philosophy** — product name, surface registers (brand/product/system), anti-references
-2. **Core Principles** — hierarchy, spacing, components, responsiveness, accessibility
-3. **Visual Language** — color, typography, elevation, radii, motion, iconography (with token names)
-4. **Do / Don't** — specific to this DS (from readme + tokens)
-5. **Component Philosophy** — namespace + voice per major component in inventory
-6. **Reusable Patterns** — named patterns from readme/cards (shell, heroes, cards, etc.)
-7. **Framework Handoff** — default targets per surface type
-
-Header must name the actual product/DS (not "Bound Design System" template title).
-Remove the `<!-- CDP:UNCONFIGURED -->` marker when writing the new file.
-
-When readme and tokens disagree, **tokens win** — note mismatches inline.
+When readme and tokens disagree, **tokens win** — note mismatches inline (see `CLAUDE.md` § Token truth).
 
 ### Phase 6 — Verify & report
 

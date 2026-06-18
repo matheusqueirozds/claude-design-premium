@@ -12,13 +12,14 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { isPathInsideRoot } from './file-snapshot.mjs';
 
 const root = process.cwd();
 const args = process.argv.slice(2);
 const json = args.includes('--json');
 const strict = args.includes('--strict');
 const targets = args.filter((arg) => arg !== '--json' && arg !== '--strict');
-const scanTargets = targets.length ? targets : ['starter-kit/static'];
+const scanTargets = targets.length ? targets : ['.'];
 const exts = new Set(['.html', '.css', '.js', '.jsx', '.ts', '.tsx', '.astro', '.vue', '.svelte']);
 
 const LAYOUT_PROPS = new Set([
@@ -259,6 +260,7 @@ function analyze(files) {
 }
 
 function walkTarget(target, files = []) {
+  if (!isPathInsideRoot(root, target)) return files;
   const abs = path.resolve(root, target);
   if (!fs.existsSync(abs)) return files;
   const stat = fs.statSync(abs);

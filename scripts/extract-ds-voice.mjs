@@ -7,6 +7,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { applyTokenHintsToVoice, extractDsTokens } from './extract-ds-tokens.mjs';
 
 const SURFACE_ICONS = ['book', 'graduation-cap', 'brain', 'group', 'bookmark', 'settings'];
 
@@ -136,6 +137,7 @@ function applyDefaults(voice, binding, readmeText = '') {
 
 export function extractDsVoice(binding, cwd = process.cwd()) {
   const readmeText = binding.readme ? read(cwd, binding.readme) : '';
+  const readmeHadTheme = /light.*default|dark.*default|dark mode is the default/i.test(readmeText);
 
   const voice = {
     language: /english/i.test(readmeText) && !/pt-BR|português brasileiro/i.test(readmeText) ? 'en' : 'pt-BR',
@@ -174,7 +176,14 @@ export function extractDsVoice(binding, cwd = process.cwd()) {
     logoPath: extractLogoPath(binding, readmeText, cwd),
   };
 
-  return applyDefaults(voice, binding, readmeText);
+  applyDefaults(voice, binding, readmeText);
+
+  voice._readmeHadTheme = readmeHadTheme;
+  const tokens = extractDsTokens(binding, cwd);
+  applyTokenHintsToVoice(voice, tokens);
+  delete voice._readmeHadTheme;
+
+  return voice;
 }
 
 export const VOICE_PLACEHOLDERS = [

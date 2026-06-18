@@ -2,26 +2,24 @@
 /**
  * unbind-harness.mjs
  *
- * Resets the harness to 100% agnostic template state:
- * - Removes ./_ds/, BOUND_DS.json, ds-helmet.snippet.html
- * - Restores placeholders in *.dc.html
- * - Resets styles.css to unbound stub
+ * Resets harness binding artifacts to agnostic template state.
+ * Does NOT delete ./_ds/ (host project data).
+ *
+ * Usage:
+ *   node scripts/unbind-harness.mjs
+ *   node scripts/unbind-harness.mjs --dry-run
+ *
+ * Exit codes: 0 success · 1 failure (rolled back) · 2 no-op · 3 arg error
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { FileSnapshot } from './file-snapshot.mjs';
 
 const root = process.cwd();
+const args = process.argv.slice(2);
+const dryRun = args.includes('--dry-run');
 
 const GENERATED = ['BOUND_DS.json', 'ds-helmet.snippet.html'];
-
-const BOUND_PATTERNS = [
-  [/_ds\/[a-z0-9-]+(?:-[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})?/gi, '{{BOUND_DS_ROOT}}'],
-  [/\bLendRIADesignSystem_[A-Za-z0-9]+\b/g, '{{BOUND_DS_NAMESPACE}}'],
-  [/\bForjaLendRIADesignSystem[A-Za-z0-9_]+\b/g, '{{BOUND_DS_NAMESPACE}}'],
-  [/\bAcademia DS\b/g, '{{BOUND_DS_NAME}}'],
-  [/\bAcademia Ds\b/g, '{{BOUND_DS_NAME}}'],
-  [/\bForja DS\b/g, '{{BOUND_DS_NAME}}'],
-];
 
 const UNBOUND_STYLES = `/* =============================================================================
    styles.css — root canvas token entry (UNBOUND)
@@ -38,11 +36,6 @@ const UNBOUND_STYLES = `/* =====================================================
 
 const HELMET_PLACEHOLDER = '  {{DS_HELMET_BLOCK}}\n';
 
-function rmrf(rel) {
-  const abs = path.join(root, rel);
-  if (fs.existsSync(abs)) fs.rmSync(abs, { recursive: true, force: true });
-}
-
 function walk(dir, files = []) {
   const abs = path.join(root, dir);
   if (!fs.existsSync(abs)) return files;
@@ -55,53 +48,162 @@ function walk(dir, files = []) {
   return files;
 }
 
-function resetHelmet(content) {
-  return content.replace(/<helmet>[\s\S]*?<\/helmet>/, `<helmet>\n${HELMET_PLACEHOLDER}</helmet>`);
+function listRootDcFiles() {
+  return walk('.').filter((f) => f.endsWith('.dc.html') && !f.startsWith('scripts/'));
 }
 
-function applyUnbindPatterns(text) {
+function loadBinding() {
+  const abs = path.join(root, 'BOUND_DS.json');
+  if (!fs.existsSync(abs)) return null;
+  try {
+    return JSON.parse(fs.readFileSync(abs, 'utf8'));
+  } catch {
+    return null;
+  }
+}
+
+function escapeRe(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function buildDynamicPatterns(binding) {
+  const patterns = [];
+
+  if (binding?.root) {
+    patterns.push([new RegExp(escapeRe(binding.root), 'g'), '{{BOUND_DS_ROOT}}']);
+  }
+
+  if (binding?.namespace) {
+    patterns.push([
+      new RegExp(`\\b${escapeRe(binding.namespace)}\\b`, 'g'),
+      '{{BOUND_DS_NAMESPACE}}',
+    ]);
+  }
+
+  if (binding?.name) {
+    patterns.push([new RegExp(escapeRe(binding.name), 'g'), '{{BOUND_DS_NAME}}']);
+  }
+
+  if (binding?.componentCount != null) {
+    patterns.push([
+      new RegExp(`value="${binding.componentCount}"`, 'g'),
+      'value="{{BOUND_DS_COMPONENT_COUNT}}"',
+    ]);
+  }
+
+  return patterns;
+}
+
+function resetHelmet(content) {
+  return content.replace(
+    /<helmet>[\s\S]*?<\/helmet>/,
+    `<helmet>\n${HELMET_PLACEHOLDER}</helmet>`,
+  );
+}
+
+function applyUnbindPatterns(text, binding) {
   let out = text;
-  for (const [re, rep] of BOUND_PATTERNS) {
+  for (const [re, rep] of buildDynamicPatterns(binding)) {
     out = out.replace(re, rep);
   }
-  out = out.replace(/value="21"/g, 'value="{{BOUND_DS_COMPONENT_COUNT}}"');
-  out = out.replace(/Academia DSOS/g, '{{BOUND_DS_NAME}}');
-  out = out.replace(/do Academia DS/g, 'do {{BOUND_DS_NAME}}');
-  out = out.replace(/Forçar o uso do Academia DS/g, 'Forçar o uso do {{BOUND_DS_NAME}}');
-  out = out.replace(/Use o Academia DS/g, 'Use o {{BOUND_DS_NAME}}');
-  out = out.replace(/Entrar na Academia/g, 'Começar agora');
   return out;
 }
 
-function main() {
-  rmrf('_ds');
-  for (const file of GENERATED) rmrf(file);
-
-  fs.writeFileSync(path.join(root, 'styles.css'), UNBOUND_STYLES);
-
-  const templateDir = path.join(root, 'scripts/templates/dc');
-  const dcFiles = walk('.').filter((f) => f.endsWith('.dc.html') && !f.startsWith('scripts/'));
-  for (const rel of dcFiles) {
-    const abs = path.join(root, rel);
-    const templatePath = path.join(templateDir, path.basename(rel));
-    if (fs.existsSync(templatePath)) {
-      fs.copyFileSync(templatePath, abs);
-      continue;
-    }
-    let content = fs.readFileSync(abs, 'utf8');
-    content = resetHelmet(content);
-    content = applyUnbindPatterns(content);
-    fs.writeFileSync(abs, content);
+function restoreDesignTemplate() {
+  const templatePath = path.join(root, 'scripts/templates/design-md.template.md');
+  if (fs.existsSync(templatePath)) {
+    fs.copyFileSync(templatePath, path.join(root, 'DESIGN.md'));
+    return;
   }
 
-  process.stdout.write(
-    [
-      'Harness reset to unbound agnostic state.',
-      '  removed: _ds/, BOUND_DS.json, ds-helmet.snippet.html',
-      `  reset: styles.css, ${dcFiles.length} *.dc.html`,
-      '  next: copy ./_ds/ into this folder, then run node scripts/bootstrap-harness.mjs',
-    ].join('\n') + '\n',
-  );
+  const unconfigured = `# DESIGN.md — Bound Design System
+
+<!-- CDP:UNCONFIGURED — harness-auto-setup will replace this file on first session -->
+
+> Template stub. Run node scripts/bootstrap-harness.mjs after ./_ds/ is present.
+`;
+  fs.writeFileSync(path.join(root, 'DESIGN.md'), unconfigured);
+}
+
+function isAlreadyUnbound() {
+  const stylesUnbound = fs.existsSync(path.join(root, 'styles.css')) &&
+    fs.readFileSync(path.join(root, 'styles.css'), 'utf8').includes('UNBOUND');
+  const noBoundJson = !fs.existsSync(path.join(root, 'BOUND_DS.json'));
+  const designStub = fs.existsSync(path.join(root, 'DESIGN.md')) &&
+    fs.readFileSync(path.join(root, 'DESIGN.md'), 'utf8').includes('CDP:UNCONFIGURED');
+
+  return stylesUnbound && noBoundJson && designStub;
+}
+
+function collectSnapshotPaths() {
+  const paths = ['styles.css', 'DESIGN.md', ...GENERATED];
+  for (const rel of listRootDcFiles()) paths.push(rel);
+  return paths;
+}
+
+function main() {
+  if (isAlreadyUnbound()) {
+    process.stdout.write('No-op: harness already unbound.\n');
+    process.exit(2);
+  }
+
+  const binding = loadBinding();
+  const dcFiles = listRootDcFiles();
+  const templateDir = path.join(root, 'scripts/templates/dc');
+
+  if (dryRun) {
+    process.stdout.write(
+      [
+        '[dry-run] Would reset harness to unbound state.',
+        '  would remove: BOUND_DS.json, ds-helmet.snippet.html',
+        '  would reset: styles.css, DESIGN.md',
+        `  would restore: ${dcFiles.length} *.dc.html from scripts/templates/dc/ when available`,
+        '  would keep: _ds/ (not touched)',
+      ].join('\n') + '\n',
+    );
+    process.exit(0);
+  }
+
+  const snapshot = new FileSnapshot();
+  snapshot.capture(root, collectSnapshotPaths());
+
+  try {
+    snapshot.apply(root, () => {
+      for (const file of GENERATED) {
+        const abs = path.join(root, file);
+        if (fs.existsSync(abs)) fs.rmSync(abs, { force: true });
+      }
+
+      fs.writeFileSync(path.join(root, 'styles.css'), UNBOUND_STYLES);
+      restoreDesignTemplate();
+
+      for (const rel of dcFiles) {
+        const abs = path.join(root, rel);
+        const templatePath = path.join(templateDir, path.basename(rel));
+        if (fs.existsSync(templatePath)) {
+          fs.copyFileSync(templatePath, abs);
+          continue;
+        }
+        let content = fs.readFileSync(abs, 'utf8');
+        content = resetHelmet(content);
+        content = applyUnbindPatterns(content, binding);
+        fs.writeFileSync(abs, content);
+      }
+
+      process.stdout.write(
+        [
+          'Harness reset to unbound agnostic state.',
+          '  removed: BOUND_DS.json, ds-helmet.snippet.html',
+          `  reset: styles.css, DESIGN.md, ${dcFiles.length} *.dc.html`,
+          '  kept: _ds/ (host project data preserved)',
+          '  next: node scripts/bootstrap-harness.mjs',
+        ].join('\n') + '\n',
+      );
+    });
+  } catch (err) {
+    process.stderr.write(`Unbind failed (rolled back): ${err.message}\n`);
+    process.exit(1);
+  }
 }
 
 main();

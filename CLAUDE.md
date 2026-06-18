@@ -113,12 +113,17 @@ context-signals → detect-bound-ds → extract-ds-voice → bootstrap-harness �
 ```
 
 ```bash
-node scripts/context-signals.mjs
-node scripts/bootstrap-harness.mjs
+node scripts/context-signals.mjs          # health signals (JSON)
+node scripts/bootstrap-harness.mjs        # bind + personalize + synthesize DESIGN.md
+node scripts/synthesize-design-md.mjs     # DESIGN.md only (after BOUND_DS.json exists)
+node scripts/unbind-harness.mjs          # reset harness state (keeps _ds/)
 node scripts/detect-canvas-antipatterns.mjs .
 node scripts/detect-text-antipatterns.mjs CLAUDE.md DESIGN.md skills *.dc.html
-node scripts/unbind-harness.mjs   # reset only
 ```
+
+Inside the canvas, `harness-auto-setup` mirrors the same pipeline by reading and applying
+`scripts/bootstrap-harness.mjs`, `scripts/synthesize-design-md.mjs`, and related `.mjs` logic
+(file writes only — no shell).
 
 ## Validation canary
 
@@ -176,6 +181,59 @@ replicate its real files instead of recreating code from memory.
 - To change a token value, edit the file under the bound DS token directory — not root `styles.css`
   (a re-export) and not `DESIGN.md` (interpretation only).
 - Canvas CSS cannot import JSON; there is no JSON token runtime. The DS CSS is authoritative.
+
+### When `DESIGN.md` disagrees with token CSS
+
+1. **Proceed with token CSS** for all visual values (colors, spacing, type, radii, motion).
+2. **Flag the mismatch** in your response and add an inline note in `DESIGN.md` at the conflicting
+   section (e.g. `> Token mismatch: readme says light default; CSS is dark-first.`).
+3. **Re-synthesize `DESIGN.md`** when the conflict is structural (theme default, font roles, major
+   do/don't). Mirror `scripts/synthesize-design-md.mjs` (canvas) or run
+   `node scripts/synthesize-design-md.mjs` outside the canvas. Do not block UI work for a single
+   interpretive sentence; block only when tokens are missing or invented.
+
+## Placeholder inventory (DC templates)
+
+Technical binding placeholders (replaced in Phase 3/4a of auto-setup):
+
+| Placeholder | Source |
+|---|---|
+| `{{DS_HELMET_BLOCK}}` | Generated helmet: CSS links + bundle script + chrome suppress |
+| `{{BOUND_DS_ROOT}}` | `BOUND_DS.json` → `root` |
+| `{{BOUND_DS_NAMESPACE}}` | `BOUND_DS.json` → `namespace` |
+| `{{BOUND_DS_NAME}}` | Human DS name |
+| `{{BOUND_DS_COMPONENT_COUNT}}` | Component inventory length |
+
+Voice placeholders (replaced in Phase 4b; see `scripts/extract-ds-voice.mjs`):
+
+| Placeholder | Typical source |
+|---|---|
+| `{{BOUND_DS_BADGE}}` | Readme tagline chip |
+| `{{BOUND_DS_HERO_HEADLINE}}` | Hero with one `<em>` accent |
+| `{{BOUND_DS_HERO_SUBHEAD}}` | Product description |
+| `{{BOUND_DS_CTA_PRIMARY}}` / `{{BOUND_DS_CTA_SECONDARY}}` | Readme CTAs |
+| `{{BOUND_DS_THEME_LABEL}}` | `NOITE · DARK` or `DIA · LIGHT` |
+| `{{BOUND_DS_WELCOME_*}}` | AppShell demo hero |
+| `{{BOUND_DS_AREA_SUFFIX}}` / `{{BOUND_DS_SEARCH_PLACEHOLDER}}` | First surface + search |
+| `{{BOUND_DS_DECK_COVER_*}}` / `{{BOUND_DS_CLOSING_*}}` | Deck cover + closing |
+| `{{BOUND_DS_DOC_TITLE}}` / `{{BOUND_DS_DOC_LEAD}}` | Doc masthead |
+| `{{BOUND_DS_LOGO_PATH}}` | DS assets path |
+| `{{BOUND_DS_FOOTER_NOTE}}` | Footer line |
+
+## Structure markers (DC blocks)
+
+Processed by `scripts/personalize-dc.mjs` (canvas: mirror in Phase 4c):
+
+| Marker | File | Behavior |
+|---|---|---|
+| `<!-- CDP:REQUIRES:ComponentName -->` | Starter, AppShell | Block removed if component not in manifest |
+| `<!-- CDP:SURFACES -->` | Landing | Regenerated from readme surfaces |
+| `<!-- CDP:NAV-LINKS -->` | Landing | Regenerated from surfaces |
+| `// CDP:APP-NAV` | AppShell script | Nav items regenerated from surfaces |
+| `<!-- CDP:GALLERY:ComponentName -->` | Starter | Gallery card pruned if component missing |
+
+Do not hand-edit markers expecting them to persist across re-setup; edit readme/surfaces or the
+generator logic instead.
 
 ## Building in this project
 
@@ -250,7 +308,7 @@ already in working context unless you have read them in the current task.
 
 Never invent tokens when the bound DS tokens provide them. Never mark a screen or component final
 until both mobile-first and accessibility checks were applied. If a task conflicts with `DESIGN.md`
-or the bound DS tokens, flag the conflict before proceeding.
+or the bound DS tokens, follow § Token truth (CSS wins, flag, re-synthesize when structural).
 
 ## What "enforce" means here
 

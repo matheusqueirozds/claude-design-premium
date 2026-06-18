@@ -8,11 +8,23 @@
 <body>
 <x-dc>
 <helmet>
-  {{DS_HELMET_BLOCK}}
+    <link rel="stylesheet" href="_ds/academia-ds-460d36aa-7bb2-48dc-9ede-f9e8954fcdb3/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/academia-ds-460d36aa-7bb2-48dc-9ede-f9e8954fcdb3/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/academia-ds-460d36aa-7bb2-48dc-9ede-f9e8954fcdb3/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/academia-ds-460d36aa-7bb2-48dc-9ede-f9e8954fcdb3/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/academia-ds-460d36aa-7bb2-48dc-9ede-f9e8954fcdb3/tokens/effects.css">
+  <link rel="stylesheet" href="_ds/academia-ds-460d36aa-7bb2-48dc-9ede-f9e8954fcdb3/tokens/base.css">
+  <link rel="stylesheet" href="_ds/academia-ds-460d36aa-7bb2-48dc-9ede-f9e8954fcdb3/tokens/components.css">
+  <link rel="stylesheet" href="_ds/academia-ds-460d36aa-7bb2-48dc-9ede-f9e8954fcdb3/tokens/markdown.css">
+  <link rel="stylesheet" href="_ds/academia-ds-460d36aa-7bb2-48dc-9ede-f9e8954fcdb3/styles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/iconoir@7.11.0/css/iconoir.css">
+  <script src="_ds/academia-ds-460d36aa-7bb2-48dc-9ede-f9e8954fcdb3/_ds_bundle.js"></script>
+  <!-- Suppress site chrome injected by the bundle (not part of components): -->
+  <style>.es-nav,.fx-rail,.as-overlay{display:none !important;}</style>
 </helmet>
 
 <!-- ════════════════════════════════════════════════════════════════════
-     TEMPLATE · LANDING ({{BOUND_DS_NAME}} · register marketing / logged-out)
+     TEMPLATE · LANDING (Academia DS · register marketing / logged-out)
      Registro separado do app shell: nav de marketing, heros expressivos.
      Duplique como [Nome].dc.html. Mantenha 1 CTA dourado por seção, ar
      generoso, hairlines como textura. Sem gradientes (exceto capas).
@@ -23,28 +35,30 @@
   <!-- ───────── NAV DE MARKETING ───────── -->
   <header style="position:sticky;top:0;z-index:20;backdrop-filter:blur(12px);background:hsl(var(--background-hsl) / 0.82);border-bottom:1px solid var(--hairline);">
     <nav style="max-width:1200px;margin:0 auto;height:72px;display:flex;align-items:center;justify-content:space-between;gap:32px;padding:0 clamp(20px,5vw,32px);">
-      <span style="display:inline-flex;align-items:center;gap:11px;"><img src="{{BOUND_DS_LOGO_PATH}}" alt="{{BOUND_DS_NAME}}" width="26" height="26" style="display:block;flex-shrink:0;"><span style="font-family:var(--font-display);font-size:var(--font-size-xl);">{{BOUND_DS_NAME}}</span></span>
+      <span style="display:inline-flex;align-items:center;gap:11px;"><img src="_ds/academia-ds-460d36aa-7bb2-48dc-9ede-f9e8954fcdb3/assets/logo-academialendaria.svg" alt="Academia DS" width="26" height="26" style="display:block;flex-shrink:0;"><span style="font-family:var(--font-display);font-size:var(--font-size-xl);">Academia DS</span></span>
       <div style="display:flex;align-items:center;gap:36px;font-size:var(--font-size-sm);color:var(--muted-foreground);">
         <!-- CDP:NAV-LINKS -->
-        <a href="#" style="color:inherit;text-decoration:none;">Início</a>
-        <a href="#" style="color:inherit;text-decoration:none;">Produto</a>
-        <!-- /CDP:NAV-LINKS -->
+        <a href="#" style="color:inherit;text-decoration:none;">Biblioteca</a>
+        <a href="#" style="color:inherit;text-decoration:none;">Academia / Área do Aluno (LMS)</a>
+        <a href="#" style="color:inherit;text-decoration:none;">Comunidade</a>
+        <a href="#" style="color:inherit;text-decoration:none;">Mentes Sintéticas</a>
+      <!-- /CDP:NAV-LINKS -->
       </div>
       <div style="display:flex;align-items:center;gap:16px;">
         <a href="#" style="font-size:var(--font-size-sm);color:var(--muted-foreground);text-decoration:none;">Entrar</a>
-        <x-import component-from-global-scope="{{BOUND_DS_NAMESPACE}}.Button" size="sm" hint-size="auto,40px">{{BOUND_DS_CTA_PRIMARY}}</x-import>
+        <x-import component-from-global-scope="LendRIADesignSystem_096da5.Button" size="sm" hint-size="auto,40px">Expanda sua Consciência.</x-import>
       </div>
     </nav>
   </header>
 
   <!-- ───────── HERO ───────── -->
   <section style="max-width:1080px;margin:0 auto;padding:140px clamp(20px,5vw,32px) 120px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:36px;">
-    <x-import component-from-global-scope="{{BOUND_DS_NAMESPACE}}.Badge" variant="brand" hint-size="auto,28px">{{BOUND_DS_BADGE}}</x-import>
-    <h1 style="font-family:var(--font-display);font-weight:300;font-size:clamp(48px,8vw,96px);line-height:0.98;letter-spacing:-0.02em;margin:0;max-width:18ch;">{{BOUND_DS_HERO_HEADLINE}}</h1>
-    <p style="font-family:var(--font-serif);font-style:italic;font-size:var(--font-size-2xl);color:var(--muted-foreground);max-width:42ch;line-height:1.45;margin:0;">{{BOUND_DS_HERO_SUBHEAD}}</p>
+    <x-import component-from-global-scope="LendRIADesignSystem_096da5.Badge" variant="brand" hint-size="auto,28px">Sabedoria secular potencializada por IA.</x-import>
+    <h1 style="font-family:var(--font-display);font-weight:300;font-size:clamp(48px,8vw,96px);line-height:0.98;letter-spacing:-0.02em;margin:0;max-width:18ch;">Unir e potencializar pessoas lendárias com IA para construírem soluções e negócios que imortalizam seu <em>legado.</em></h1>
+    <p style="font-family:var(--font-serif);font-style:italic;font-size:var(--font-size-2xl);color:var(--muted-foreground);max-width:42ch;line-height:1.45;margin:0;">a Brazilian AI-first education platform</p>
     <div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:8px;">
-      <x-import component-from-global-scope="{{BOUND_DS_NAMESPACE}}.Button" size="lg" hint-size="auto,56px">{{BOUND_DS_CTA_PRIMARY}}</x-import>
-      <x-import component-from-global-scope="{{BOUND_DS_NAMESPACE}}.Button" variant="outline" size="lg" hint-size="auto,56px">{{BOUND_DS_CTA_SECONDARY}}</x-import>
+      <x-import component-from-global-scope="LendRIADesignSystem_096da5.Button" size="lg" hint-size="auto,56px">Expanda sua Consciência.</x-import>
+      <x-import component-from-global-scope="LendRIADesignSystem_096da5.Button" variant="outline" size="lg" hint-size="auto,56px">Saiba mais</x-import>
     </div>
   </section>
 
@@ -60,13 +74,28 @@
 
   <!-- ───────── FEATURES ───────── -->
   <section style="max-width:1200px;margin:0 auto;padding:120px clamp(20px,5vw,32px);display:flex;flex-direction:column;gap:56px;">
-    <x-import component-from-global-scope="{{BOUND_DS_NAMESPACE}}.SectionHeader" eyebrow="O que você recebe" title="Superfícies do produto" hint-size="100%,72px"></x-import>
+    <x-import component-from-global-scope="LendRIADesignSystem_096da5.SectionHeader" eyebrow="O que você recebe" title="Superfícies do produto" hint-size="100%,72px"></x-import>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:1px;background:var(--hairline);border:1px solid var(--hairline);">
       <!-- CDP:SURFACES -->
       <div style="background:var(--background);padding:40px 32px;display:flex;flex-direction:column;gap:16px;">
         <i class="iconoir-book" aria-hidden="true" style="font-size:30px;color:var(--primary);"></i>
-        <h3 style="font-family:var(--font-serif);font-weight:400;font-size:var(--font-size-2xl);margin:0;line-height:1.1;">Início</h3>
-        <p style="font-size:var(--font-size-base);color:var(--muted-foreground);line-height:1.55;margin:0;">Substituído pelo auto-setup com as superfícies do readme do DS.</p>
+        <h3 style="font-family:var(--font-serif);font-weight:400;font-size:var(--font-size-2xl);margin:0;line-height:1.1;">Biblioteca</h3>
+        <p style="font-size:var(--font-size-base);color:var(--muted-foreground);line-height:1.55;margin:0;">Explore Biblioteca com os componentes de LendRIADesignSystem_096da5.</p>
+      </div>
+      <div style="background:var(--background);padding:40px 32px;display:flex;flex-direction:column;gap:16px;">
+        <i class="iconoir-graduation-cap" aria-hidden="true" style="font-size:30px;color:var(--primary);"></i>
+        <h3 style="font-family:var(--font-serif);font-weight:400;font-size:var(--font-size-2xl);margin:0;line-height:1.1;">Academia / Área do Aluno (LMS)</h3>
+        <p style="font-size:var(--font-size-base);color:var(--muted-foreground);line-height:1.55;margin:0;">Explore Academia / Área do Aluno (LMS) com os componentes de LendRIADesignSystem_096da5.</p>
+      </div>
+      <div style="background:var(--background);padding:40px 32px;display:flex;flex-direction:column;gap:16px;">
+        <i class="iconoir-brain" aria-hidden="true" style="font-size:30px;color:var(--primary);"></i>
+        <h3 style="font-family:var(--font-serif);font-weight:400;font-size:var(--font-size-2xl);margin:0;line-height:1.1;">Comunidade</h3>
+        <p style="font-size:var(--font-size-base);color:var(--muted-foreground);line-height:1.55;margin:0;">Explore Comunidade com os componentes de LendRIADesignSystem_096da5.</p>
+      </div>
+      <div style="background:var(--background);padding:40px 32px;display:flex;flex-direction:column;gap:16px;">
+        <i class="iconoir-group" aria-hidden="true" style="font-size:30px;color:var(--primary);"></i>
+        <h3 style="font-family:var(--font-serif);font-weight:400;font-size:var(--font-size-2xl);margin:0;line-height:1.1;">Mentes Sintéticas</h3>
+        <p style="font-size:var(--font-size-base);color:var(--muted-foreground);line-height:1.55;margin:0;">Explore Mentes Sintéticas com os componentes de LendRIADesignSystem_096da5.</p>
       </div>
       <!-- /CDP:SURFACES -->
     </div>
@@ -86,17 +115,17 @@
   <!-- ───────── CTA FINAL ───────── -->
   <section style="border-top:1px solid var(--hairline);">
     <div style="max-width:1080px;margin:0 auto;padding:140px clamp(20px,5vw,32px);display:flex;flex-direction:column;align-items:center;text-align:center;gap:32px;">
-      <p class="al-eyebrow" style="color:var(--primary);">{{BOUND_DS_CLOSING_EYEBROW}}</p>
-      <h2 style="font-family:var(--font-display);font-weight:300;font-size:clamp(40px,6vw,72px);line-height:1;letter-spacing:-0.01em;margin:0;max-width:20ch;">{{BOUND_DS_CLOSING_HEADLINE}}</h2>
-      <x-import component-from-global-scope="{{BOUND_DS_NAMESPACE}}.Button" size="lg" hint-size="auto,56px">{{BOUND_DS_CTA_PRIMARY}}</x-import>
+      <p class="al-eyebrow" style="color:var(--primary);">Comece hoje</p>
+      <h2 style="font-family:var(--font-display);font-weight:300;font-size:clamp(40px,6vw,72px);line-height:1;letter-spacing:-0.01em;margin:0;max-width:20ch;">Unir e potencializar pessoas lendárias com IA para construírem soluções e negócios que imortalizam seu <em>legado.</em></h2>
+      <x-import component-from-global-scope="LendRIADesignSystem_096da5.Button" size="lg" hint-size="auto,56px">Expanda sua Consciência.</x-import>
     </div>
   </section>
 
   <!-- ───────── FOOTER ───────── -->
   <footer style="border-top:1px solid var(--hairline);background:var(--card);">
     <div style="max-width:1200px;margin:0 auto;padding:48px clamp(20px,5vw,32px);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;">
-      <span style="display:inline-flex;align-items:center;gap:10px;"><img src="{{BOUND_DS_LOGO_PATH}}" alt="{{BOUND_DS_NAME}}" width="22" height="22" style="display:block;flex-shrink:0;"><span style="font-family:var(--font-display);font-size:var(--font-size-lg);">{{BOUND_DS_NAME}}</span></span>
-      <span class="al-data" style="color:var(--muted-foreground);">{{BOUND_DS_FOOTER_NOTE}}</span>
+      <span style="display:inline-flex;align-items:center;gap:10px;"><img src="_ds/academia-ds-460d36aa-7bb2-48dc-9ede-f9e8954fcdb3/assets/logo-academialendaria.svg" alt="Academia DS" width="22" height="22" style="display:block;flex-shrink:0;"><span style="font-family:var(--font-display);font-size:var(--font-size-lg);">Academia DS</span></span>
+      <span class="al-data" style="color:var(--muted-foreground);">© 2026 Academia DS · SECURED BY AURORA</span>
     </div>
   </footer>
 

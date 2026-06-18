@@ -8,11 +8,23 @@
 <body>
 <x-dc>
 <helmet>
-  {{DS_HELMET_BLOCK}}
+    <link rel="stylesheet" href="_ds/academia-ds-460d36aa-7bb2-48dc-9ede-f9e8954fcdb3/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/academia-ds-460d36aa-7bb2-48dc-9ede-f9e8954fcdb3/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/academia-ds-460d36aa-7bb2-48dc-9ede-f9e8954fcdb3/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/academia-ds-460d36aa-7bb2-48dc-9ede-f9e8954fcdb3/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/academia-ds-460d36aa-7bb2-48dc-9ede-f9e8954fcdb3/tokens/effects.css">
+  <link rel="stylesheet" href="_ds/academia-ds-460d36aa-7bb2-48dc-9ede-f9e8954fcdb3/tokens/base.css">
+  <link rel="stylesheet" href="_ds/academia-ds-460d36aa-7bb2-48dc-9ede-f9e8954fcdb3/tokens/components.css">
+  <link rel="stylesheet" href="_ds/academia-ds-460d36aa-7bb2-48dc-9ede-f9e8954fcdb3/tokens/markdown.css">
+  <link rel="stylesheet" href="_ds/academia-ds-460d36aa-7bb2-48dc-9ede-f9e8954fcdb3/styles.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/iconoir@7.11.0/css/iconoir.css">
+  <script src="_ds/academia-ds-460d36aa-7bb2-48dc-9ede-f9e8954fcdb3/_ds_bundle.js"></script>
+  <!-- Suppress site chrome injected by the bundle (not part of components): -->
+  <style>.es-nav,.fx-rail,.as-overlay{display:none !important;}</style>
 </helmet>
 
 <!-- ════════════════════════════════════════════════════════════════════
-     TEMPLATE · DECK ({{BOUND_DS_NAME}} · Editorial, 1920×1080)
+     TEMPLATE · DECK (Academia DS · Editorial, 1920×1080)
      Slides = <section data-label> inline-styled dentro do deck-stage.
      Duplique como [Nome].dc.html, troque o conteúdo dos slides.
      Sistema: capa serif com 1 palavra em itálico-ouro · divisores com nº
@@ -25,13 +37,13 @@
   <!-- ① CAPA -->
   <section data-label="Capa" data-speaker-notes="Abertura. Diga o título e a promessa em uma frase." style="width:100%;height:100%;background:var(--background);color:var(--foreground);font-family:var(--font-sans);padding:120px 140px;display:flex;flex-direction:column;justify-content:space-between;box-sizing:border-box;">
     <div style="display:flex;justify-content:space-between;align-items:center;">
-      <span style="display:inline-flex;align-items:center;gap:12px;"><img src="{{BOUND_DS_LOGO_PATH}}" alt="{{BOUND_DS_NAME}}" width="32" height="32" style="display:block;flex-shrink:0;"><span style="font-family:var(--font-display);font-size:32px;">{{BOUND_DS_NAME}}</span></span>
-      <span class="al-data" style="color:var(--muted-foreground);font-size:16px;">{{BOUND_DS_NAME}} · 2026</span>
+      <span style="display:inline-flex;align-items:center;gap:12px;"><img src="_ds/academia-ds-460d36aa-7bb2-48dc-9ede-f9e8954fcdb3/assets/logo-academialendaria.svg" alt="Academia DS" width="32" height="32" style="display:block;flex-shrink:0;"><span style="font-family:var(--font-display);font-size:32px;">Academia DS</span></span>
+      <span class="al-data" style="color:var(--muted-foreground);font-size:16px;">Academia DS · 2026</span>
     </div>
     <div style="display:flex;flex-direction:column;gap:32px;max-width:24ch;">
       <p class="al-eyebrow" style="color:var(--primary);font-size:18px;">Apresentação</p>
-      <h1 style="font-family:var(--font-display);font-weight:300;font-size:108px;line-height:0.98;letter-spacing:-0.02em;margin:0;">{{BOUND_DS_DECK_COVER_HEADLINE}}</h1>
-      <p style="font-family:var(--font-serif);font-style:italic;font-size:32px;color:var(--muted-foreground);margin:0;line-height:1.4;">{{BOUND_DS_DECK_COVER_SUBHEAD}}</p>
+      <h1 style="font-family:var(--font-display);font-weight:300;font-size:108px;line-height:0.98;letter-spacing:-0.02em;margin:0;">Unir e potencializar pessoas lendárias com IA para construírem soluções e negócios que imortalizam seu <em>legado.</em></h1>
+      <p style="font-family:var(--font-serif);font-style:italic;font-size:32px;color:var(--muted-foreground);margin:0;line-height:1.4;">Unir e potencializar pessoas lendárias com IA para construírem soluções e negócios que imortalizam seu legado.</p>
     </div>
     <div style="width:100%;height:1px;background:linear-gradient(90deg,var(--hairline-strong),transparent);"></div>
   </section>
@@ -114,10 +126,10 @@
 
   <!-- ⑥ ENCERRAMENTO -->
   <section data-label="Encerramento" data-speaker-notes="Chamada para ação. Uma frase, um convite." style="width:100%;height:100%;background:var(--background);color:var(--foreground);font-family:var(--font-sans);padding:140px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:48px;text-align:center;box-sizing:border-box;">
-    <p class="al-eyebrow" style="color:var(--primary);font-size:18px;">{{BOUND_DS_CLOSING_EYEBROW}}</p>
-    <h2 style="font-family:var(--font-display);font-weight:300;font-size:96px;line-height:1;letter-spacing:-0.01em;margin:0;max-width:20ch;">{{BOUND_DS_CLOSING_HEADLINE}}</h2>
-    <div style="margin-top:8px;"><x-import component-from-global-scope="{{BOUND_DS_NAMESPACE}}.Button" size="lg" hint-size="auto,56px">{{BOUND_DS_CTA_PRIMARY}}</x-import></div>
-    <span style="display:inline-flex;align-items:center;gap:11px;position:absolute;bottom:80px;"><img src="{{BOUND_DS_LOGO_PATH}}" alt="{{BOUND_DS_NAME}}" width="28" height="28" style="display:block;flex-shrink:0;"><span style="font-family:var(--font-display);font-size:28px;">{{BOUND_DS_NAME}}</span></span>
+    <p class="al-eyebrow" style="color:var(--primary);font-size:18px;">Comece hoje</p>
+    <h2 style="font-family:var(--font-display);font-weight:300;font-size:96px;line-height:1;letter-spacing:-0.01em;margin:0;max-width:20ch;">Unir e potencializar pessoas lendárias com IA para construírem soluções e negócios que imortalizam seu <em>legado.</em></h2>
+    <div style="margin-top:8px;"><x-import component-from-global-scope="LendRIADesignSystem_096da5.Button" size="lg" hint-size="auto,56px">Expanda sua Consciência.</x-import></div>
+    <span style="display:inline-flex;align-items:center;gap:11px;position:absolute;bottom:80px;"><img src="_ds/academia-ds-460d36aa-7bb2-48dc-9ede-f9e8954fcdb3/assets/logo-academialendaria.svg" alt="Academia DS" width="28" height="28" style="display:block;flex-shrink:0;"><span style="font-family:var(--font-display);font-size:28px;">Academia DS</span></span>
   </section>
 
 </x-import>

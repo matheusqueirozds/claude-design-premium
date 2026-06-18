@@ -1,0 +1,82 @@
+name: CI
+
+# Validates the Claude Design Premium harness using the project's own
+# dependency-free Node scripts (node:fs / node:path only — no npm install).
+# The harness runs inside Claude Design Web (no build/lint/test toolchain),
+# so CI checks only what the project actually ships:
+#   - context-signals.mjs       -> health reporter (gate: must run + emit valid JSON)
+#   - detect-canvas-antipatterns -> advisory (soft-rollout, non-blocking)
+#   - detect-text-antipatterns   -> advisory (soft-rollout, non-blocking)
+#
+# Soft-rollout mirrors the Squawk WARN-mode pattern: the two detectors are
+# visible in the log but do not block merges yet. Promote to blocking only
+# after the harness baseline is cleaned (template *.dc.html lang/title +
+# CLAUDE.md em-dashes are known advisory hits today).
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate-harness:
+    name: Validate harness (Node built-ins only)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Verify scripts parse (node --check)
+        run: |
+          set -e
+          for f in scripts/*.mjs; do
+            echo "--check $f"
+            node --check "$f"
+          done
+
+      # GATE: context-signals must run and emit valid JSON. A crash or
+      # malformed JSON here is a real failure (the harness self-diagnostic
+      # is broken). dsDetected:false is expected — the host project ships _ds/.
+      - name: Health signals (gate)
+        run: |
+          set -euo pipefail
+          node scripts/context-signals.mjs > context-signals.json
+          node -e "JSON.parse(require('fs').readFileSync('context-signals.json','utf8')); console.log('context-signals: valid JSON ✓')"
+          echo "--- health signals ---"
+          cat context-signals.json
+
+      # ADVISORY: surface canvas anti-patterns (missing lang/title, etc.).
+      # Non-blocking during soft-rollout — *.dc.html are template fragments.
+      - name: Canvas anti-patterns (advisory)
+        continue-on-error: true
+        run: node scripts/detect-canvas-antipatterns.mjs .
+
+      # ADVISORY: surface AI-slop text patterns (em-dashes, filler).
+      # Non-blocking during soft-rollout — CLAUDE.md documents the protocol.
+      - name: Text anti-patterns (advisory)
+        continue-on-error: true
+        run: node scripts/detect-text-antipatterns.mjs CLAUDE.md DESIGN.md skills
+
+      - name: Upload health signals artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: context-signals
+          path: context-signals.json
+          retention-days: 14

@@ -10,6 +10,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { isPathInsideRoot } from './file-snapshot.mjs';
 
 const root = process.cwd();
 const args = process.argv.slice(2);
@@ -58,6 +59,7 @@ function extOf(filePath) {
 }
 
 function walkTarget(target, files = []) {
+  if (!isPathInsideRoot(root, target)) return files;
   const abs = path.resolve(root, target);
   if (!fs.existsSync(abs)) return files;
   const stat = fs.statSync(abs);

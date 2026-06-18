@@ -1,5 +1,29 @@
 # Changelog
 
+## 2.2.0 — 2026-06-18
+
+### Added
+
+- `scripts/synthesize-design-md.mjs` — síntese determinística de `DESIGN.md` (paridade com Phase 5 do canvas)
+- `scripts/extract-ds-tokens.mjs` — amostragem de tokens CSS para voz e DESIGN.md
+- `scripts/file-snapshot.mjs` — snapshot/rollback para scripts mutantes (R3 script-security)
+- `scripts/templates/design-md.template.md` — stub restaurado pelo unbind
+- `.github/workflows/ci.yml` — CI de validação do harness (node --check + context-signals gate + detectores advisory)
+- `CLAUDE.md` § Placeholder Inventory + Structure Markers + protocolo de mismatch token/CSS
+
+### Changed
+
+- `bootstrap-harness.mjs` agora sintetiza `DESIGN.md`, suporta `--dry-run`, `--bundle`, `--allow-multi`, exit codes 0/1/2/3
+- `unbind-harness.mjs` **não apaga `_ds/`**; unbind dinâmico via `BOUND_DS.json`; snapshot/rollback
+- `detect-bound-ds.mjs` — fallback alfabético + `selectedBundle` quando há múltiplos bundles
+- `extract-ds-voice.mjs` — hints de tema a partir de token CSS quando readme é vago
+- `detect-*-antipatterns.mjs` — path traversal bloqueado; canvas scanner default = `.`
+- `.gitignore` — `/_ds/` ignorado (host-project DS nunca é shipado com o harness)
+
+### Fixed
+
+- Drift canvas ↔ scripts: `node scripts/bootstrap-harness.mjs` produz o mesmo estado que auto-setup (incl. DESIGN.md)
+
 ## 2.1.1 — 2026-06-18
 
 ### Fixed

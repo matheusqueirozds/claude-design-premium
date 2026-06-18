@@ -22,7 +22,7 @@
       <div style="display:flex;gap:28px;flex-wrap:wrap;margin-top:8px;">
         <x-import component-from-global-scope="{{BOUND_DS_NAMESPACE}}.StatChip" label="Componentes" value="{{BOUND_DS_COMPONENT_COUNT}}" hint-size="auto,28px"></x-import>
         <x-import component-from-global-scope="{{BOUND_DS_NAMESPACE}}.StatChip" label="Prompts prontos" value="12" tone="primary" hint-size="auto,28px"></x-import>
-        <x-import component-from-global-scope="{{BOUND_DS_NAMESPACE}}.StatChip" label="Tema" value="{{BOUND_DS_THEME_LABEL}}" hint-size="auto,28px"></x-import>
+        <x-import component-from-global-scope="{{BOUND_DS_NAMESPACE}}.StatChip" label="Tema" value="NOITE · DARK" hint-size="auto,28px"></x-import>
       </div>
     </header>
 
@@ -321,15 +321,14 @@
           <x-import component-from-global-scope="{{BOUND_DS_NAMESPACE}}.SectionHeader" eyebrow="Tendências" title="Mais Populares" hint-size="100%,72px"></x-import>
         </div>
 
-        <!-- CDP:REQUIRES:BookCard -->
-        <div style="display:flex;flex-direction:column;gap:14px;">
+                <div style="display:flex;flex-direction:column;gap:14px;">
           <span class="al-data" style="color:var(--muted-foreground);">BOOKCARD · demo de conteúdo</span>
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(180px,100%),1fr));gap:20px;">
             <x-import component-from-global-scope="{{BOUND_DS_NAMESPACE}}.BookCard" title="Exemplo A" author="Autor" category="Categoria" status="reading" hint-size="100%,320px"></x-import>
             <x-import component-from-global-scope="{{BOUND_DS_NAMESPACE}}.BookCard" title="Exemplo B" author="Autor" category="Categoria" status="read" hint-size="100%,320px"></x-import>
           </div>
         </div>
-        <!-- /CDP:REQUIRES:BookCard -->
+        
       </div>
 
       <x-import component-from-global-scope="{{BOUND_DS_NAMESPACE}}.Alert" variant="success" hint-size="100%,56px">São {{BOUND_DS_COMPONENT_COUNT}} componentes no namespace {{BOUND_DS_NAMESPACE}} — todos compostos do bundle. Duplique este arquivo para começar.</x-import>
