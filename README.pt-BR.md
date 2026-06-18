@@ -1,7 +1,6 @@
 # Claude Design Premium
 
-Harness documentado para **Claude Design Web** — design system agnóstico, auto-configuração na
-primeira mensagem, auditorias e handoff.
+Harness para **Claude Design Web**. Detecta o design system do projeto (`_ds/`), configura sozinho e guia a criação de interfaces.
 
 > Comunidade · não oficial · sem afiliação com a Anthropic.
 
@@ -9,71 +8,55 @@ primeira mensagem, auditorias e handoff.
 
 ---
 
-## Como usar (4 passos)
+## Como usar
 
 ### 1. Baixar
 
-[Baixe este repositório como ZIP](https://github.com/oalanicolas/claude-design-premium/archive/refs/heads/main.zip)
-(Code → Download ZIP).
+[Baixe o ZIP](https://github.com/oalanicolas/claude-design-premium/archive/refs/heads/main.zip) (Code → Download ZIP).
 
-### 2. Enviar para o Claude Design
+### 2. Enviar no Claude Design
 
-No seu projeto Claude Design Web (que já tem o design system em `_ds/`), faça upload do ZIP ou da
-pasta extraída para a área de **upload** do projeto.
+No seu projeto Claude Design (que **já tem** a pasta `_ds/` com o design system), faça upload do ZIP.
 
 ### 3. Subir para a raiz
 
-Na mesma sessão, peça ao Claude:
+Na mesma conversa, peça ao Claude:
 
 ```text
-Copie todos os arquivos da pasta de upload para a raiz principal do projeto.
-Não apague a pasta _ds/ que já existe.
+Copie todos os arquivos da pasta de upload para a raiz do projeto.
+Não apague a pasta _ds/.
 ```
 
 ### 4. Nova guia → GO
 
-Abra uma **nova conversa/guia** no mesmo projeto e envie apenas:
+Abra uma **nova guia** no mesmo projeto e envie:
 
 ```text
 GO
 ```
 
-O harness detecta que está desconfigurado, lê `_ds/`, gera `DESIGN.md`, `BOUND_DS.json`,
-`styles.css`, patcheia os templates e pergunta qual superfície desenhar primeiro.
+Pronto. O harness lê `_ds/`, gera `DESIGN.md`, configura os templates e pergunta qual superfície desenhar primeiro.
 
-Pronto. Não precisa de npm, git, nem scripts dentro do canvas.
+**Não precisa** de npm, git, terminal nem scripts dentro do canvas.
 
 ---
 
 ## O que vem no pacote
 
-| Arquivo / pasta | Função |
+| Item | Função |
 |---|---|
-| `CLAUDE.md` | Protocolo, roteamento, auto-setup |
-| `DESIGN.md` | Template — substituído pelo auto-setup na primeira sessão |
-| `skills/` | Procedimentos (auditorias, polish, handoff…) |
-| `Starter.dc.html` | Guia vivo + galeria de componentes + prompts prontos |
-| `AppShell`, `Landing`, `Deck`, `Doc` | Templates de superfície |
-| `scripts/` | Manutenção **fora** do canvas (Node built-ins, sem npm) |
+| `CLAUDE.md` | Protocolo + auto-setup |
+| `DESIGN.md` | Identidade visual (gerado no passo 4) |
+| `skills/` | Auditorias, polish, handoff |
+| `*.dc.html` | Templates de superfície |
+| `scripts/` | Opcional — só fora do canvas |
 
-O harness **não inclui** `_ds/` — isso já vive no seu projeto Claude Design.
-
----
-
-## Scripts locais (opcional, fora do canvas)
-
-```bash
-node scripts/context-signals.mjs
-node scripts/bootstrap-harness.mjs
-node scripts/detect-canvas-antipatterns.mjs .
-```
-
-Zero dependências npm. Detalhes em [`LIMITATIONS.md`](LIMITATIONS.md) e
-[`docs/canvas-runtime.md`](docs/canvas-runtime.md).
+O harness **não traz** `_ds/` — isso já está no seu projeto.
 
 ---
 
-## Versão anterior (greenfield)
+## Mais detalhes
 
-O starter greenfield (`starter-kit/`, `templates/`, `components/`) foi arquivado em
-[`_archive/v1/`](_archive/v1/).
+- Limitações: [`LIMITATIONS.md`](LIMITATIONS.md)
+- Runtime do canvas: [`docs/canvas-runtime.md`](docs/canvas-runtime.md)
+- Versão antiga (greenfield): [`_archive/v1/`](_archive/v1/) — ignore se só quer o fluxo acima

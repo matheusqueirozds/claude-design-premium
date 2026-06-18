@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.0.1 — 2026-06-18
+
+### Changed
+
+- README reduzido ao fluxo de 4 passos (ZIP → upload → copiar → GO)
+- `_archive/v1/` marcado como legado — ignorar para uso brownfield
+
 ## 2.0.0 — 2026-06-18
 
 ### Changed
