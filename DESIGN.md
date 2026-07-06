@@ -33,7 +33,19 @@ the bound DS readme forbids.
 
 ---
 
-## 2. Core Principles
+## 2. Visual Configuration Dials
+
+Adjust these dials based on the `brief-framing` read of the user intent.
+
+* **`DESIGN_VARIANCE`**: [1-10] (1 = Perfect Symmetry, 10 = Artsy Chaos). Set to 8 for premium/creative.
+* **`MOTION_INTENSITY`**: [1-10] (1 = Static, 10 = Cinematic). Set to 6 for standard premium.
+* **`VISUAL_DENSITY`**: [1-10] (1 = Art Gallery Airy, 10 = Cockpit Packed). Set to 4 for marketing.
+
+Always explicitly state the dial configuration you are applying before generating UI code.
+
+---
+
+## 3. Core Principles
 
 ### Hierarchy & Scanning
 How should a screen scan? Which type roles carry meaning vs. data vs. UI chrome?
@@ -54,7 +66,7 @@ claim certification.
 
 ---
 
-## 3. Visual Language
+## 4. Visual Language
 
 Ground every decision in the bound DS token CSS (`BOUND_DS.json` -> `globalCssPaths`).
 
@@ -80,7 +92,7 @@ CDN listed there and use `iconoir-*` classes. Never emoji in product UI unless t
 
 ---
 
-## 4. Do / Don't
+## 5. Do / Don't
 
 **Do**
 - Compose bound components; load the DS bundle once in `<helmet>` (see `CLAUDE.md` § Building).
@@ -96,7 +108,7 @@ CDN listed there and use `iconoir-*` classes. Never emoji in product UI unless t
 
 ---
 
-## 5. Component Philosophy
+## 6. Component Philosophy
 
 Namespace from `BOUND_DS.json` -> `namespace`. For voice, variants, and composition rules, read:
 
@@ -110,7 +122,7 @@ Document any project-specific component usage notes below as they crystallize:
 
 ---
 
-## 6. Reusable Patterns
+## 7. Reusable Patterns
 
 Named pieces to preserve through to code. Extract from the bound DS readme, approved screens,
 and `skills/framework-handoff.skill.md` inventory:
@@ -124,7 +136,7 @@ and `skills/framework-handoff.skill.md` inventory:
 
 ---
 
-## 7. Framework Handoff
+## 8. Framework Handoff
 
 Preferred handoff target chosen per surface:
 

@@ -27,12 +27,15 @@ Skip only when **all** pass:
 - `styles.css` has `@import` lines pointing at the bound DS
 - All `*.dc.html` helmets are patched (no `{{` placeholders)
 
-## Procedure (canvas  -  execute script pipeline)
+## Procedure (Primary: `/design-sync`)
 
-Per [`docs/script-pipeline.md`](../docs/script-pipeline.md) and [`docs/canvas-runtime.md`](../docs/canvas-runtime.md):
-Claude Design supports JavaScript. **Read and execute** each script's logic against project files  -
-do not skip scripts or hand-wave their outputs. No `git`, `npm`, or `node` shell  -  apply the JS
-algorithms directly. Local `node scripts/*.mjs` mirrors the same contract for maintainers.
+As of June 2026, Claude Design Web supports native Design System Imports.
+1. **Execute Native Sync**: Tell the user to run the **`/design-sync`** command or use the Native DS Import button.
+2. **If native sync is unavailable or fails**, fall back to the **Legacy Declarative Setup Workflow** below.
+
+## Legacy Declarative Setup Workflow (Fallback)
+
+**Declarative Execution**: Instead of simulating a JavaScript runtime in your mind to evaluate the `.mjs` scripts, follow the procedural steps below to set up the environment. The scripts in `scripts/*.mjs` exist as a deterministic reference for local maintainers. Inside the canvas, you should build the artifacts by directly applying the declarative rules described here.
 
 ### Phase 0  -  Context signals
 

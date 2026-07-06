@@ -32,6 +32,7 @@ design brief and classifies the surface before visual work begins.
 6. **Ask only blocking questions**: If the brief is incomplete, ask the few questions that materially
    change the design. Do not ask questions that can be safely inferred.
 7. **Write a compact brief**: Produce the minimal context needed for the next skill to act.
+8. **Output the Design Read**: Before any generation, output a single sentence explicitly declaring your read of the project. Format: *"Reading this as: \<page kind> for \<audience>, with a \<vibe> language, leaning toward \<design system or aesthetic family>."*
 
 ## Output contract
 
@@ -44,6 +45,7 @@ Produce:
 - Token or brand gaps.
 - Blocking questions, if any.
 - Recommended next skill.
+- The explicit **Design Read** sentence.
 
 Do not generate the visual design in the same response when blocking context is missing.
 

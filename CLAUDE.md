@@ -282,6 +282,8 @@ mirror the DS-safe pattern used there. Every other component is fine through `x-
   premium identity pages and FIVU-grade design-system showcases.
 - `mobile-first-audit`: responsive behavior, breakpoints, and touch targets.
 - `accessibility-audit`: contrast, semantics, keyboard, focus, and reduced motion.
+- `full-output-enforcement`: strict guardrails against partial UI generation and code truncation.
+- `image-to-code`: translates uploaded screenshots/mockups into UI using only bound DS tokens.
 
 Handoff / code-phase skills (not part of the canvas design loop):
 
@@ -299,10 +301,12 @@ already in working context unless you have read them in the current task.
 | **Start of session / before major work** | `scripts/context-signals.mjs`, `docs/script-pipeline.md` | Execute context-signals logic; report `SCRIPTS APPLIED`. If `needsAutoSetup`, continue to harness-auto-setup. If `needsShowcaseAssembly`, run assemble-design-system-showcase **before** other UI work. |
 | **Showcase pending** (`CDP:SHOWCASE:PENDING`, `needsShowcaseAssembly`) | `.cdp/showcase-brief.json`, `BOUND_DS.json`, `DESIGN.md`, DS readme, `skills/assemble-design-system-showcase.skill.md`, `skills/fivu-identity-showcase.skill.md` | Model assembles the full `design-system.dc.html` vitrine - customized per product. For premium narrative/showcase pages, use the FIVU architecture so the result is a worked identity system, not a generic component catalog. JS does not replace this step. |
 | FIVU, identidade verbal, voice system, corpus, system prompt de voz, página como a referência FIVU | `skills/fivu-identity-showcase.skill.md`, `BOUND_DS.json` when present, `DESIGN.md`, DS readme, supplied corpus/reference files | Use the single FIVU skill to synthesize voice, tone, corpus evidence, examples, anti-vocabulary, artifacts, and validation into one premium `.dc.html` page or identity spec. Do not split into multiple agents or generate the final page by JS. |
-| **Any message when harness is unconfigured** (`GO`, greeting, anything) | `docs/script-pipeline.md`, `skills/harness-auto-setup.skill.md`, `scripts/detect-bound-ds.mjs`, `scripts/extract-ds-voice.mjs`, `scripts/bootstrap-harness.mjs`, `scripts/personalize-dc.mjs` | Run full script pipeline steps 0 - 4 **before** anything else; write all artifacts; synthesize DESIGN.md; report `HARNESS AUTO-SETUP` + `SCRIPTS APPLIED`. |
+| **Any message when harness is unconfigured** (`GO`, greeting, anything) | `skills/harness-auto-setup.skill.md` | Trigger the **`/design-sync`** command or native Claude Design import. Fallback to `docs/script-pipeline.md` legacy scripts ONLY if native sync is unavailable. Report `HARNESS AUTO-SETUP`. |
 | Bootstrap validation explicitly requested | `CLAUDE.md`, `scripts/context-signals.mjs` | Include `CDP-CLAUDE-OK` once; execute context-signals; state whether routing + script pipeline appear loaded. |
 | New project, unclear audience/brand/first surface, or reference files without instructions | `skills/brief-framing.skill.md`, `BOUND_DS.json`, `DESIGN.md` | Classify the surface and ask only blocking questions before visual generation. |
-| Any UI generation, modification, or review | `BOUND_DS.json`, `DESIGN.md`, bound DS token CSS, `scripts/context-signals.mjs`, `skills/design-system-guardian.skill.md` | Run context-signals if not run this session; anchor in DESIGN.md + tokens; run `check_design_system` when available. |
+| User uploads an image/mockup to be built | `skills/image-to-code.skill.md`, `BOUND_DS.json`, `DESIGN.md` | Map visual elements to DS tokens. Do not invent CSS if a token exists. |
+| Any UI generation, modification, or review | `BOUND_DS.json`, `DESIGN.md`, bound DS token CSS, `scripts/context-signals.mjs`, `skills/design-system-guardian.skill.md`, `skills/full-output-enforcement.skill.md` | Run context-signals if not run this session; anchor in DESIGN.md + tokens; ensure full output generation without truncation (`// ...`). |
+| Modifying existing code or Redesigning | `CLAUDE.md` | Execute `Scan -> Diagnose -> Fix` workflow. Always write down the diagnostic of the current code publically before generating the fix. |
 | Starting a new deliverable (screen, deck, doc, prototype) | `design-system.dc.html` (`BOUND_DS.json` -> `introDc`), `ds-helmet.snippet.html`, `DESIGN.md` | Create a new `Name.dc.html`; copy the `<helmet>` block from the design-system page or snippet. |
 | Static / plain-CSS canvas output | bound DS token CSS (via root `styles.css`) | Use `var(--*)` tokens only; no JSON import, npm, ESM, or bundler. |
 | Canvas prototype needs React state/interaction | `CLAUDE.md` § Canvas runtime constraints | DCs already render React; for escape-hatch pages use UMD React + Babel + `window` globals only. |

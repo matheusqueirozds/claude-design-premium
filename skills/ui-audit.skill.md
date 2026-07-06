@@ -28,7 +28,7 @@ are caught before polish or code, and feedback is specific and actionable rather
 4. **Composition & layout**: Does the layout feel balanced and intentional? Are elements aligned
    consistently (or deliberately broken for emphasis)? Is there visual noise? Use flex for 1D,
    grid for 2D, and avoid card grids when spacing/dividers would communicate the grouping better.
-5. **Density & clarity**: Is information density appropriate for the audience and device?
+5. **Density, Variance & Dials**: Check if the current visual matches the declared `VISUAL_DENSITY`, `DESIGN_VARIANCE`, and `MOTION_INTENSITY` from `DESIGN.md`. If Variance is high (e.g. 8), does the layout have enough asymmetry? If Density is low (e.g. 3), is there enough whitespace?
 6. **Information architecture**: Does grouping and order match user priorities?
 7. **States**: Are empty, loading, and error states designed, not just the happy path?
 8. **System consistency**: Does this screen feel like it belongs with the others?

@@ -26,9 +26,11 @@ defaulting to familiar SaaS, portfolio, dashboard, or landing-page templates.
    could have been guessed from the category alone. If yes, mark it as a blocker.
 3. **Run the anti-reference test**: Check whether the design only avoids the obvious cliché but falls
    into a second cliché instead.
-4. **Inspect repeated scaffold patterns**: Look for default hero + stats blocks, endless equal card grids,
-   decorative gradient text, generic glass panels, overused tiny uppercase labels, arbitrary blobs,
-   shallow dashboard chrome, or decorative motion with no job.
+4. **Inspect for explicit AI Visual Anti-Patterns (BANNED)**:
+   - **Colors**: Pure `#000000` background. Oversaturated accents (>80%). Purple/blue "AI gradients". Random dark sections breaking light modes.
+   - **Typography**: Using `Inter` everywhere for premium contexts. Headlines lacking weight. Only 400/700 weights.
+   - **Layout**: Everything centered and symmetrical. 3 equal card columns (the classic AI layout). Height 100vh flexbox stretching. Symmetrical vertical padding ignoring optical balance.
+   - **Surfaces**: Generic shadow `box-shadow` without tinting. Pure flat vectors without texture/noise.
    **First:** execute `scripts/detect-canvas-antipatterns.mjs` logic on the target `*.dc.html` paths
    (read the script, apply its checks in the canvas). Treat findings as evidence, not as a full
    originality judgment. See [`docs/script-pipeline.md`](../docs/script-pipeline.md).

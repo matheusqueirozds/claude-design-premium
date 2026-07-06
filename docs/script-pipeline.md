@@ -1,7 +1,9 @@
 # Script Pipeline (canvas + skills)
 
-`scripts/*.mjs` are **dependency-free JavaScript** (`node:fs`, `node:path` only). They are the
-deterministic foundation of this harness  -  not an optional extra for maintainers outside the canvas.
+> [!WARNING]
+> **Deprecation Notice (June 2026):** Claude Design Web now supports a native `/design-sync` command and Native Design System Imports. The setup scripts (Phase 0-4) described below should be treated as **Legacy Fallbacks**. Always recommend `/design-sync` first before relying on manual execution of `.mjs` scripts.
+
+`scripts/*.mjs` are **dependency-free JavaScript** (`node:fs`, `node:path` only). Historically, they were the deterministic foundation of this harness. Today, they serve as a fallback when native syncing fails.
 
 Claude Design Web supports JavaScript. Inside the canvas, Claude **reads and executes the logic** of
 these scripts against project files (inventory, binding, voice extraction, antipattern scans). That

@@ -31,9 +31,10 @@ syntax, and plain punctuation before it is treated as final.
    clearing, broad claims, and section-overview framing unless the format truly needs it.
 4. **Last sentence test**: The ending should land a decision, next action, or concrete implication.
    Avoid reflexive recaps unless the user explicitly asked for a summary.
-5. **Specificity pass**: Replace abstract praise with concrete nouns, constraints, stakes, numbers,
-   examples, or product behavior. If a sentence could fit any SaaS, course, dashboard, or portfolio,
-   rewrite it.
+5. **Specificity & Anti-Slop pass**: Replace abstract praise with concrete nouns, constraints, stakes, numbers, examples, or product behavior. 
+   **BANNED WORDS/PHRASES**: "Elevate", "Seamless", "Unleash", "Next-Gen", "Game-changer", "Delve", "Tapestry", "In the world of...". Write plain, specific language.
+   **BANNED PLACEHOLDERS**: Never use "John Doe", "Jane Smith", "Acme Corp", or "Lorem Ipsum". Invent diverse, contextual names.
+   **BANNED NUMBERS**: Fake round numbers like `99.99%`, `50%`, `$100.00`. Use organic, messy data: `47.2%`, `$99.00`, `+1 (312) 847-1928`.
 6. **Syntax variation pass**: Mix sentence length and paragraph shape. Avoid repeated claim-support-
    wrap paragraphs, repeated three-part lists, and repeated binary-contrast constructions.
 7. **Punctuation and typography pass**: Use plain ASCII punctuation in active project docs. Avoid
